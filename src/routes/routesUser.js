@@ -3,25 +3,24 @@ import passport from 'passport';
 import path from 'path';
 import { isAuth, isLogged } from '../middlewares/middleware.js';
 
-const router = new Router();
+const routerUser = new Router();
 
-router.get('/', isAuth, (req, res, next) => {
-	console.log('hola me trabe aca');
+routerUser.get('/', isAuth, (req, res, next) => {
 	res.redirect('/content');
 });
 
-router.get('/username', (req, res) => {
+routerUser.get('/username', (req, res) => {
 	res.json(req.session.passport.user);
 });
 
-router.get('/logout', (req, res, next) => {
+routerUser.get('/logout', (req, res, next) => {
 	req.session.destroy(function (err) {
 		if (err) return next(err);
 		res.redirect('/login');
 	});
 });
 
-router.post(
+routerUser.post(
 	'/register',
 	passport.authenticate('register', {
 		successRedirect: '/login',
@@ -29,15 +28,15 @@ router.post(
 	})
 );
 
-router.get('/register', isLogged, (req, res) => {
+routerUser.get('/register', isLogged, (req, res) => {
 	res.sendFile(path.resolve('public/register.html'));
 });
 
-router.get('/failRegister', (req, res) => {
+routerUser.get('/failRegister', (req, res) => {
 	res.sendFile(path.resolve('public/failRegister.html'));
 });
 
-router.post(
+routerUser.post(
 	'/login',
 	passport.authenticate('login', {
 		successRedirect: '/content',
@@ -45,12 +44,12 @@ router.post(
 	})
 );
 
-router.get('/login', isLogged, (req, res) => {
+routerUser.get('/login', isLogged, (req, res) => {
 	res.sendFile(path.resolve('public/login.html'));
 });
 
-router.get('/failLogin', (req, res) => {
+routerUser.get('/failLogin', (req, res) => {
 	res.sendFile(path.resolve('public/failLogin.html'));
 });
 
-export default router;
+export default routerUser;

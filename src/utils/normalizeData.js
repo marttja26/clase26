@@ -18,4 +18,3 @@ const normalizeData = (data) => {
 export default normalizeData
 
 
-// console.log(util.inspect(normalizedData, false, 12, true))

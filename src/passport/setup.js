@@ -4,11 +4,11 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
 passport.serializeUser((user, done) => {
-	done(null, user.username);
+	done(null, user.email);
 });
 
-passport.deserializeUser((username, done) => {
-	User.findOne({ username: username }, function (err, user) {
+passport.deserializeUser((email, done) => {
+	User.findOne({ email: email }, function (err, user) {
 		done(err, user);
 	});
 });
@@ -18,12 +18,13 @@ passport.use(
 	new LocalStrategy(
 		{
 			passReqToCallback: true,
+			usernameField: 'email'
 		},
-		(req, username, password, done) => {
-			User.findOne({ username: username })
+		(req, email, password, done) => {
+			User.findOne({ email: email })
 				.then((user) => {
 					if (!user) {
-						const newUser = new User({ username, password });
+						const newUser = new User({ email, password });
 						bcrypt.genSalt(10, (err, salt) => {
 							bcrypt.hash(newUser.password, salt, (err, hash) => {
 								if (err) console.log(err);
@@ -54,9 +55,10 @@ passport.use(
 	new LocalStrategy(
 		{
 			passReqToCallback: true,
+			usernameField: 'email'
 		},
-		(req, username, password, done) => {
-			User.findOne({ username: username })
+		(req, email, password, done) => {
+			User.findOne({ email: email })
 				.then((user) => {
 					if (!user) {
 						return done(null, false, { message: 'El usuario no existe' });

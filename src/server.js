@@ -1,20 +1,26 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { config } from './config.js';
 import express from 'express';
 import session from 'express-session';
 import http from 'http';
 import { Server } from 'socket.io';
 import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
-import router from './routes/routes.js';
-import ContainerFake from './containers/ContainerFake.js';
+import routerUser from './routes/routesUser.js';
+import routerOperation from './routes/routesOperation.js';
+import routerProductos from './routes/routesProductos.js';
 import ContainerFs from './containers/ContainerFs.js';
 import passport from './passport/setup.js';
 import { isAuth } from './middlewares/middleware.js';
-const app = express();
 
+const { PORT } = yargs(hideBin(process.argv))
+	.alias({ p: 'PORT' })
+	.default({ PORT: 8080 }).argv;
+
+const app = express();
 mongoose
-	.connect(process.env.MONGO_URL, {
+	.connect(config.MONGO_URL, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
@@ -26,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
 	session({
 		store: MongoStore.create({
-			mongoUrl: process.env.MONGO_URL,
+			mongoUrl: config.MONGO_URL,
 			mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
 		}),
 
@@ -47,7 +53,6 @@ app.use('/content', express.static('public'));
 const server = http.createServer(app);
 const io = new Server(server);
 
-const productsApi = new ContainerFake();
 const messagesApi = new ContainerFs('./mensajes.json');
 
 io.on('connection', async (socket) => {
@@ -62,13 +67,21 @@ io.on('connection', async (socket) => {
 	});
 });
 
-app.get('/api/productos-test', (req, res) => {
-	res.json(productsApi.getProducts(5));
+app.get('/info', (req, res) => {
+	res.json({
+		'Argumentos de Entrada': process.argv.splice(2), // O  yargs(hideBin(process.argv)).argv ---NO SE CUAL DEBERIA USAR---
+		'Sistema Operativo': process.platform,
+		'Version de node.js': process.version,
+		'Memoria total reservada': process.rss,
+		'Path de ejecucion': process.execPath,
+		'Process id': process.pid,
+		'Carpeta del proyecto': process.argv[1],
+	});
 });
 
-app.use('/', router);
-
-const PORT = process.env.PORT || 8080;
+app.use('/', routerUser);
+app.use('/', routerProductos);
+app.use('/', routerOperation);
 
 const srv = server.listen(PORT, () => {
 	console.log(
