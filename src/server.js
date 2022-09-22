@@ -13,8 +13,11 @@ import routerProductos from './routes/routesProductos.js';
 import ContainerFs from './containers/ContainerFs.js';
 import passport from './passport/setup.js';
 import { isAuth } from './middlewares/middleware.js';
+import cluster from 'cluster';
+import os from 'os';
+const numCPUs = os.cpus().length;
 
-const { PORT } = yargs(hideBin(process.argv))
+const { PORT, SERVER } = yargs(hideBin(process.argv))
 	.alias({ p: 'PORT' })
 	.default({ PORT: 8080 }).argv;
 
@@ -69,6 +72,8 @@ io.on('connection', async (socket) => {
 
 app.get('/info', (req, res) => {
 	res.json({
+		PUERTO: PORT,
+		'Numero de procesadores presentes': numCPUs,
 		'Argumentos de Entrada': process.argv.splice(2), // O  yargs(hideBin(process.argv)).argv ---NO SE CUAL DEBERIA USAR---
 		'Sistema Operativo': process.platform,
 		'Version de node.js': process.version,
@@ -79,13 +84,45 @@ app.get('/info', (req, res) => {
 	});
 });
 
+app.get('/api/randoms', (req, res) => {
+	res.json({
+		crack: 'holaa',
+		port: PORT,
+	});
+});
+
 app.use('/', routerUser);
 app.use('/', routerProductos);
 app.use('/', routerOperation);
 
 const srv = server.listen(PORT, () => {
 	console.log(
-		`Servidor Http con Websockets escuchando en el puerto ${srv.address().port}`
+		`Servidor Http con Websockets escuchando en el puerto ${
+			srv.address().port
+		} -PID WORKER ${process.pid}`
 	);
 });
 srv.on('error', (error) => console.log(`Error en servidor ${error}`));
+
+//SERVER NODEMON DESCOMENTAR PARA PROBAR FUNCIONAMIENTO.
+
+// if (cluster.isMaster) {
+// 	console.log(`Master PID ${process.pid}`);
+// 	for (let index = 0; index < numCPUs; index++) {
+// 		cluster.fork();
+// 	}
+
+// 	cluster.on('exit', (worker, code, signal) => {
+// 		console.log(`worker ${worker.process.pid} died`);
+// 		cluster.fork();
+// 	});
+// } else {
+// 	const srv = server.listen(PORT, () => {
+// 		console.log(
+// 			`Servidor Http con Websockets escuchando en el puerto ${
+// 				srv.address().port
+// 			} -PID WORKER ${process.pid}`
+// 		);
+// 	});
+// 	srv.on('error', (error) => console.log(`Error en servidor ${error}`));
+// }
