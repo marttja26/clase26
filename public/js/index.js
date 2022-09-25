@@ -118,13 +118,13 @@ const addMessage = (e) => {
 	return false;
 };
 
-fetch('http://localhost:8080/api/productos-test', {
+fetch('http://localhost/api/productos-test', {
 	method: 'GET',
 })
 	.then((res) => res.json())
 	.then((res) => renderProducts(res));
 
-fetch('http://localhost:8080/username', {
+fetch('http://localhost/username', {
 	method: 'GET',
 })
 	.then((res) => res.json())
