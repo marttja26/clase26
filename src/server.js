@@ -15,13 +15,13 @@ import passport from './passport/setup.js';
 import { isAuth } from './middlewares/middleware.js';
 import cluster from 'cluster';
 import os from 'os';
+import compression from 'compression';
+import logger from './logger/logger.js';
 const numCPUs = os.cpus().length;
 
 const { PORT, MODO } = yargs(hideBin(process.argv))
 	.alias({ p: 'PORT', m: 'MODO' })
-	.default({ PORT: 8080, MODO: 'FORK'}).argv;
-
-console.log(PORT)
+	.default({ PORT: 8080, MODO: 'FORK' }).argv;
 
 const app = express();
 mongoose
@@ -29,8 +29,8 @@ mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
-	.then(console.log('conectado a la DB'))
-	.catch((err) => console.log(err));
+	.then(logger.info('conectado a la DB'))
+	.catch((err) => logger.error(`Error al conectarse a la DB ${err}`));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -61,7 +61,7 @@ const io = new Server(server);
 const messagesApi = new ContainerFs('./mensajes.json');
 
 io.on('connection', async (socket) => {
-	console.log('Un cliente se ha conectado');
+	logger.info('Un cliente se ha conectado');
 	const chat = await messagesApi.getNormalizedMensajes();
 	socket.emit('chat', chat);
 
@@ -73,6 +73,20 @@ io.on('connection', async (socket) => {
 });
 
 app.get('/info', (req, res) => {
+	const { method, url } = req;
+	logger.info(` Peticion a ${method} ${url} recibida`);
+	console.log({
+		modo: MODO,
+		PUERTO: PORT,
+		'Numero de procesadores presentes': numCPUs,
+		'Argumentos de Entrada': process.argv.splice(2),
+		'Sistema Operativo': process.platform,
+		'Version de node.js': process.version,
+		'Memoria total reservada': process.rss,
+		'Path de ejecucion': process.execPath,
+		'Process id': process.pid,
+		'Carpeta del proyecto': process.argv[1],
+	});
 	res.json({
 		modo: MODO,
 		PUERTO: PORT,
@@ -87,50 +101,64 @@ app.get('/info', (req, res) => {
 	});
 });
 
-app.get('/api/randoms', (req, res) => {
+app.get('/infocompression', compression(), (req, res) => {
+	const { method, url } = req;
+	logger.info(` Peticion a ${method} ${url} recibida`);
 	res.json({
 		modo: MODO,
-		port: PORT,
+		PUERTO: PORT,
+		'Numero de procesadores presentes': numCPUs,
+		'Argumentos de Entrada': process.argv.splice(2),
+		'Sistema Operativo': process.platform,
+		'Version de node.js': process.version,
+		'Memoria total reservada': process.rss,
+		'Path de ejecucion': process.execPath,
+		'Process id': process.pid,
+		'Carpeta del proyecto': process.argv[1],
 	});
 });
 
 app.use('/', routerUser);
 app.use('/', routerProductos);
-app.use('/', routerOperation);
+// app.use('/', routerOperation); Desactivar child_process de la ruta randoms
+app.use((req, res) => {
+	// HANDLE UNMATCHED ROUTES
+	const { method, url } = req;
+	logger.warn(` Ruta ${method} ${url} no implementada.`);
+	res.json({
+		message: `Ruta ${method} ${url} no implementada.`,
+	});
+});
 
 if (MODO === 'FORK') {
 	const srv = server.listen(PORT, () => {
-		console.log(
+		logger.info(
 			`Servidor Http con Websockets escuchando en el puerto ${
 				srv.address().port
 			} -PID WORKER ${process.pid}`
 		);
 	});
-	srv.on('error', (error) => console.log(`Error en servidor ${error}`));
+	srv.on('error', (error) => logger.error(` Error en el servidor ${error}`));
 }
 if (MODO === 'CLUSTER') {
 	if (cluster.isMaster) {
-		console.log(`Master PID ${process.pid}`);
+		logger.info(`Master PID ${process.pid}`);
 		for (let index = 0; index < numCPUs; index++) {
 			cluster.fork();
 		}
-	
+
 		cluster.on('exit', (worker, code, signal) => {
-			console.log(`worker ${worker.process.pid} died`);
+			logger.info(`worker ${worker.process.pid} died`);
 			cluster.fork();
 		});
 	} else {
 		const srv = server.listen(PORT, () => {
-			console.log(
+			logger.info(
 				`Servidor Http con Websockets escuchando en el puerto ${
 					srv.address().port
 				} -PID WORKER ${process.pid}`
 			);
 		});
-		srv.on('error', (error) => console.log(`Error en servidor ${error}`));
+		srv.on('error', (error) => logger.error(` Error en el servidor ${error}`));
 	}
 }
-
-
-
-

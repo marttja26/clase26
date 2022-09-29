@@ -1,6 +1,6 @@
 import fs from 'fs';
 import normalizeData from '../utils/normalizeData.js';
-
+import logger from '../logger/logger.js';
 export default class ContainerFs {
 	constructor(ruta) {
 		this.ruta = ruta;
@@ -13,7 +13,7 @@ export default class ContainerFs {
 			);
 			return archivo;
 		} catch (error) {
-			console.log(error);
+			logger.error(`Error al leer el archivo ${error}`);
 			return [];
 		}
 	}
@@ -30,7 +30,7 @@ export default class ContainerFs {
 		try {
 			await fs.promises.writeFile(this.ruta, JSON.stringify(archivo));
 		} catch (error) {
-			throw new Error(`Hubo un error al guardar el archivo ${error}`);
+			logger.error(`Hubo un error al guardar el archivo ${error}`);
 		}
 	}
 }

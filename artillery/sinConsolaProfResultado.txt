@@ -1,0 +1,147 @@
+Statistical profiling result from sinConsola.log, (5702 ticks, 0 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+   5449   95.6%          C:\WINDOWS\SYSTEM32\ntdll.dll
+    240    4.2%          C:\Users\marto\AppData\Roaming\npm\node_modules\node\bin\node.exe
+      1    0.0%          C:\WINDOWS\System32\KERNELBASE.dll
+      1    0.0%          C:\WINDOWS\System32\KERNEL32.DLL
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+      1    0.0%    9.1%  RegExp: ;\s*charset\s*=
+      1    0.0%    9.1%  LazyCompile: *serializeInto C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\bson\lib\parser\serializer.js:553:23
+      1    0.0%    9.1%  LazyCompile: *popAsyncContext node:internal/async_hooks:553:25
+      1    0.0%    9.1%  LazyCompile: *deserializeObject C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\bson\lib\parser\deserializer.js:65:27
+      1    0.0%    9.1%  LazyCompile: *command C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongodb\lib\sdam\server.js:152:12
+      1    0.0%    9.1%  LazyCompile: *_unrefTimer node:net:477:52
+      1    0.0%    9.1%  LazyCompile: *Readable.read node:internal/streams/readable:402:35
+      1    0.0%    9.1%  LazyCompile: *Long.compare C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\bson\lib\long.js:291:39
+      1    0.0%    9.1%  Function: ^noop node:internal/util/debuglog:47:14
+      1    0.0%    9.1%  Function: ^needFinish node:internal/streams/writable:653:20
+      1    0.0%    9.1%  Function: ^measureRoundTripTime C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongodb\lib\sdam\monitor.js:288:30
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+     11    0.2%  100.0%  JavaScript
+      0    0.0%    0.0%  C++
+      9    0.2%   81.8%  GC
+   5691   99.8%          Shared libraries
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+   5449   95.6%  C:\WINDOWS\SYSTEM32\ntdll.dll
+
+    240    4.2%  C:\Users\marto\AppData\Roaming\npm\node_modules\node\bin\node.exe
+    138   57.5%    C:\Users\marto\AppData\Roaming\npm\node_modules\node\bin\node.exe
+     21   15.2%      Function: ^compileFunction node:vm:316:25
+     21  100.0%        Function: ^wrapSafe node:internal/modules/cjs/loader:1063:18
+     21  100.0%          Function: ^Module._compile node:internal/modules/cjs/loader:1103:37
+     18   85.7%            Function: ^Module._extensions..js node:internal/modules/cjs/loader:1158:37
+      3   14.3%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1158:37
+     17   12.3%      Function: ^moduleStrategy node:internal/modules/esm/translators:114:56
+     17  100.0%        Function: ^moduleProvider node:internal/modules/esm/loader:452:28
+     17  100.0%          C:\Users\marto\AppData\Roaming\npm\node_modules\node\bin\node.exe
+     10    7.2%      Function: ^handleWriteReq node:internal/stream_base_commons:45:24
+     10  100.0%        Function: ^writeGeneric node:internal/stream_base_commons:147:22
+      8   80.0%          Function: ^Socket._writeGeneric node:net:891:42
+      8  100.0%            Function: ^Socket._write node:net:928:35
+      2   20.0%          LazyCompile: *Writable.write node:internal/streams/writable:336:36
+      1   50.0%            LazyCompile: *ondata node:internal/streams/readable:764:18
+      1   50.0%            Function: ^log C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\winston\lib\winston\transports\console.js:44:6
+      8    5.8%      Function: ^stat node:internal/modules/cjs/loader:157:14
+      7   87.5%        Function: ^tryFile node:internal/modules/cjs/loader:424:17
+      3   42.9%          Function: ^tryPackage node:internal/modules/cjs/loader:378:20
+      3  100.0%            Function: ^Module._findPath node:internal/modules/cjs/loader:534:28
+      3   42.9%          Function: ^tryExtensions node:internal/modules/cjs/loader:440:23
+      3  100.0%            Function: ^Module._findPath node:internal/modules/cjs/loader:534:28
+      1   14.3%          LazyCompile: *Module._findPath node:internal/modules/cjs/loader:534:28
+      1  100.0%            Function: ^Module._resolveFilename node:internal/modules/cjs/loader:894:35
+      1   12.5%        Function: ^Module._findPath node:internal/modules/cjs/loader:534:28
+      1  100.0%          Function: ^Module._resolveFilename node:internal/modules/cjs/loader:894:35
+      1  100.0%            Function: ^Module._load node:internal/modules/cjs/loader:800:24
+      6    4.3%      C:\Users\marto\AppData\Roaming\npm\node_modules\node\bin\node.exe
+      2   33.3%        Function: ^stat node:internal/modules/cjs/loader:157:14
+      2  100.0%          Function: ^Module._findPath node:internal/modules/cjs/loader:534:28
+      2  100.0%            Function: ^Module._resolveFilename node:internal/modules/cjs/loader:894:35
+      1   16.7%        LazyCompile: ~pathtoRegexp C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\path-to-regexp\index.js:28:22
+      1  100.0%          LazyCompile: ~Layer C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express\lib\router\layer.js:33:15
+      1  100.0%            LazyCompile: ~route C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express\lib\router\index.js:502:29
+      1   16.7%        LazyCompile: *serializeInto C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\bson\lib\parser\serializer.js:553:23
+      1  100.0%          LazyCompile: *serializeObject C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\bson\lib\parser\serializer.js:260:25
+      1  100.0%            LazyCompile: *serializeInto C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\bson\lib\parser\serializer.js:553:23
+      1   16.7%        Function: ^parse C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express-session\node_modules\cookie\index.js:48:15
+      1  100.0%          Function: ^getcookie C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express-session\index.js:529:19
+      1  100.0%            Function: ^session C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express-session\index.js:179:26
+      1   16.7%        Function: ^fromString C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongoose\node_modules\mongodb\lib\utils.js:370:22
+      1  100.0%          Function: ^ns C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongoose\node_modules\mongodb\lib\utils.js:348:12
+      1  100.0%            Function: ^measureRoundTripTime C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongoose\node_modules\mongodb\lib\sdam\monitor.js:287:30
+      4    2.9%      Function: ^compileForInternalLoader node:internal/bootstrap/loaders:316:27
+      4  100.0%        Function: ^nativeModuleRequire node:internal/bootstrap/loaders:353:29
+      1   25.0%          Function: ~<anonymous> node:tls:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:316:27
+      1   25.0%          Function: ~<anonymous> node:http:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:316:27
+      1   25.0%          Function: ~<anonymous> node:child_process:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:316:27
+      1   25.0%          Function: ~<anonymous> node:assert:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:316:27
+      3    2.2%      Function: ^writevGeneric node:internal/stream_base_commons:122:23
+      3  100.0%        Function: ^Socket._writeGeneric node:net:891:42
+      3  100.0%          Function: ^Socket._writev node:net:923:36
+      3  100.0%            Function: ^doWrite node:internal/streams/writable:401:17
+      3    2.2%      Function: ^realpathSync node:fs:2469:22
+      1   33.3%        LazyCompile: ~toRealPath node:internal/modules/cjs/loader:433:20
+      1  100.0%          LazyCompile: ~tryFile node:internal/modules/cjs/loader:424:17
+      1  100.0%            LazyCompile: ~tryExtensions node:internal/modules/cjs/loader:440:23
+      1   33.3%        LazyCompile: ~finalizeResolution node:internal/modules/esm/resolve:290:28
+      1  100.0%          LazyCompile: ~moduleResolve node:internal/modules/esm/resolve:894:23
+      1  100.0%            LazyCompile: ~defaultResolve node:internal/modules/esm/resolve:1034:30
+      1   33.3%        Function: ^finalizeResolution node:internal/modules/esm/resolve:290:28
+      1  100.0%          Function: ^moduleResolve node:internal/modules/esm/resolve:894:23
+      1  100.0%            Function: ^defaultResolve node:internal/modules/esm/resolve:1034:30
+      2    1.4%      LazyCompile: ~configSecureContext node:internal/tls/secure-context:124:29
+      2  100.0%        LazyCompile: ~createSecureContext node:_tls_common:99:29
+      2  100.0%          LazyCompile: ~connect node:_tls_wrap:1605:35
+      1   50.0%            LazyCompile: ~makeConnection C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongoose\node_modules\mongodb\lib\cmap\connect.js:248:24
+      1   50.0%            LazyCompile: ~makeConnection C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongodb\lib\cmap\connect.js:256:24
+      2    1.4%      Function: ^slice node:buffer:599:12
+      1   50.0%        LazyCompile: *deserializeObject C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\bson\lib\parser\deserializer.js:65:27
+      1  100.0%          LazyCompile: *parse C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongodb\lib\cmap\commands.js:426:10
+      1  100.0%            Function: ^onMessage C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\mongodb\lib\cmap\connection.js:156:14
+      1   50.0%        Function: ^toString node:buffer:789:46
+      1  100.0%          Function: ^readFileSync node:fs:460:22
+      1  100.0%            LazyCompile: ~Module._extensions..json node:internal/modules/cjs/loader:1208:39
+      2    1.4%      Function: ^session C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express-session\index.js:179:26
+      2  100.0%        Function: ^handle C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express\lib\router\layer.js:86:49
+      2  100.0%          Function: ^trim_prefix C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express\lib\router\index.js:293:23
+      2  100.0%            LazyCompile: *next C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express\lib\router\index.js:177:16
+      2    1.4%      Function: ^read node:internal/modules/package_json_reader:16:14
+      2  100.0%        Function: ^readPackage node:internal/modules/cjs/loader:319:21
+      1   50.0%          LazyCompile: *Module._findPath node:internal/modules/cjs/loader:534:28
+      1  100.0%            Function: ^Module._resolveFilename node:internal/modules/cjs/loader:894:35
+      1   50.0%          Function: ^readPackageScope node:internal/modules/cjs/loader:361:26
+      1  100.0%            Function: ^Module._extensions..js node:internal/modules/cjs/loader:1158:37
+      2    1.4%      Function: ^initialize C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\passport\lib\middleware\initialize.js:51:29
+      2  100.0%        Function: ^handle C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express\lib\router\layer.js:86:49
+      2  100.0%          Function: ^trim_prefix C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express\lib\router\index.js:293:23
+      2  100.0%            LazyCompile: *next C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express\lib\router\index.js:177:16
+      2    1.4%      Function: ^hash C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express-session\index.js:596:14
+      2  100.0%        Function: ^inflate C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express-session\index.js:371:22
+      2  100.0%          Function: ^<anonymous> C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\express-session\index.js:485:38
+      2  100.0%            Function: ^<anonymous> C:\Users\marto\Desktop\coderrr\BACKEND\CLASE 26\node_modules\connect-mongo\build\main\lib\MongoStore.js:203:10
+      2    1.4%      Function: ^TLSSocket.getPeerCertificate node:_tls_wrap:992:50
+      2  100.0%        Function: ^onConnectSecure node:_tls_wrap:1524:25
+      2  100.0%          Function: ^emit node:events:460:44
+      2  100.0%            Function: ^TLSSocket._finishInit node:_tls_wrap:926:43
+

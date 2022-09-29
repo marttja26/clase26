@@ -1,0 +1,5 @@
+{"level":"error","message":"Error al conectarse a la DB MongoServerError: bad auth : Authentication failed."}
+{"level":"error","message":"Error al conectarse a la DB MongoServerError: bad auth : Authentication failed."}
+{"level":"error","message":"Error al conectarse a la DB MongoServerError: bad auth : Authentication failed."}
+{"level":"error","message":"Error al conectarse a la DB MongoServerError: bad auth : Authentication failed."}
+{"level":"error","message":" Error en el servidor Error: listen EADDRINUSE: address already in use :::8080"}
