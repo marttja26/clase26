@@ -21,7 +21,7 @@ const numCPUs = os.cpus().length;
 
 const { PORT, MODO } = yargs(hideBin(process.argv))
 	.alias({ p: 'PORT', m: 'MODO' })
-	.default({ PORT: 8080, MODO: 'FORK' }).argv;
+	.default({ PORT: config.MONGO_URL || 8080, MODO: 'FORK' }).argv;
 
 const app = express();
 mongoose
