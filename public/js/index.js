@@ -118,13 +118,13 @@ const addMessage = (e) => {
 	return false;
 };
 
-fetch('http://localhost/api/productos-test', {
+fetch('https://backendprojectcoder.herokuapp.com/productos-test', {
 	method: 'GET',
 })
 	.then((res) => res.json())
 	.then((res) => renderProducts(res));
-
-fetch('http://localhost/username', {
+	
+fetch('https://backendprojectcoder.herokuapp.com/username', {
 	method: 'GET',
 })
 	.then((res) => res.json())
