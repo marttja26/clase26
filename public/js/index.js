@@ -118,6 +118,8 @@ const addMessage = (e) => {
 	return false;
 };
 
+// CAMBIAR URL DE LOS FETCH PARA USARLO DESDE EL HOST 'http://localhost:8080/*'
+
 fetch('https://backendprojectcoder.herokuapp.com/api/productos-test', {
 	method: 'GET',
 })
